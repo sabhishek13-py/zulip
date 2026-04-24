@@ -4654,9 +4654,12 @@ class RealmPropertyActionTest(BaseAction):
         bot = self.example_user("default_bot")
         admins_group = system_user_groups_dict[SystemGroups.ADMINISTRATORS]
 
+
         setting_group = self.create_or_update_anonymous_group_for_setting(
             [othello, bot], [admins_group]
         )
+
+        setting_group = self.create_or_update_anonymous_group_for_setting([othello, bot], [admins_group])
         now = timezone_now()
 
         with self.verify_action(state_change_expected=True, num_events=1) as events:
@@ -4687,9 +4690,12 @@ class RealmPropertyActionTest(BaseAction):
         check_realm_update_dict("events[0]", events[0])
         self.assertEqual(
             events[0]["data"][setting_name],
+
             UserGroupMembersDict(
                 direct_members=[othello.id, bot.id], direct_subgroups=[admins_group.id]
             ),
+            UserGroupMembersDict(direct_members=[othello.id, bot.id], direct_subgroups=[admins_group.id]),
+
         )
 
         old_setting_api_value = get_group_setting_value_for_api(setting_group)
@@ -4734,8 +4740,11 @@ class RealmPropertyActionTest(BaseAction):
         self.assertEqual(
             events[0]["data"][setting_name],
             UserGroupMembersDict(
+
                 direct_members=[self.user_profile.id, bot.id],
                 direct_subgroups=[moderators_group.id],
+                direct_members=[self.user_profile.id, bot.id], direct_subgroups=[moderators_group.id]
+
             ),
         )
 
