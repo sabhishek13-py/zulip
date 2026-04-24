@@ -134,7 +134,7 @@ def get_user_groups(
 
 
 @transaction.atomic(durable=True)
-@require_non_guest_user
+@require_human_non_guest_user
 @typed_endpoint
 def edit_user_group(
     request: HttpRequest,
@@ -243,7 +243,7 @@ def deactivate_user_group(
     return json_success(request)
 
 
-@require_non_guest_user
+@require_human_non_guest_user
 @typed_endpoint
 @transaction.atomic(durable=True)
 def update_user_group_backend(
@@ -540,7 +540,7 @@ def remove_subgroups_from_group_backend(
     return json_success(request)
 
 
-@require_non_guest_user
+@require_human_non_guest_user
 @typed_endpoint
 @transaction.atomic(durable=True)
 def update_subgroups_of_user_group(
